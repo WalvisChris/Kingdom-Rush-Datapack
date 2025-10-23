@@ -1,0 +1,1 @@
+summon stray ~ ~ ~ {Invulnerable: 1, NoAI: 1, Silent: 1, Tags: ["enemy", "speed.normal"], ArmorItems: [{}, {}, {}, {id: "leather_helmet", Count: 1, components: {dyed_color: {rgb: 0}}}]}

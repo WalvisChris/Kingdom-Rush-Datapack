@@ -1,0 +1,9 @@
+function func:update:
+    # towers
+    execute as @e[tag=buildspot] run function func:tower/update
+    # enemies
+    execute as @e[tag=enemy] run function func:enemy/update
+    # GUI
+    execute as @e[tag=gui] run function func:gui/update
+    # soldier
+    execute as @e[tag=soldier] run function func:soldier/update

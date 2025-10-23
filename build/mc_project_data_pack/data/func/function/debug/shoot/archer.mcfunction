@@ -1,0 +1,16 @@
+particle cloud ^ ^ ^ 0 0 0 0 1
+particle cloud ^ ^ ^0.5 0 0 0 0 1
+particle cloud ^ ^ ^1.0 0 0 0 0 1
+particle cloud ^ ^ ^1.5 0 0 0 0 1
+particle cloud ^ ^ ^2.0 0 0 0 0 1
+particle cloud ^ ^ ^2.5 0 0 0 0 1
+particle cloud ^ ^ ^3.0 0 0 0 0 1
+particle cloud ^ ^ ^3.5 0 0 0 0 1
+particle cloud ^ ^ ^4.0 0 0 0 0 1
+particle cloud ^ ^ ^4.5 0 0 0 0 1
+particle cloud ^ ^ ^5.0 0 0 0 0 1
+particle cloud ^ ^ ^5.5 0 0 0 0 1
+particle cloud ^ ^ ^6.0 0 0 0 0 1
+particle cloud ^ ^ ^6.5 0 0 0 0 1
+particle cloud ^ ^ ^7.0 0 0 0 0 1
+particle cloud ^ ^ ^7.5 0 0 0 0 1

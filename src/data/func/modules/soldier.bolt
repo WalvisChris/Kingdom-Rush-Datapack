@@ -1,0 +1,16 @@
+function func:soldier/update:
+    # initiate fight
+    execute as @s at @s if entity @e[tag=enemy,limit=1,sort=nearest,distance=..1] unless entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
+        execute at @s run tag @e[tag=enemy,limit=1,sort=nearest,distance=..1,tag=!inCombat] add inCombat
+        execute at @s run tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..1]
+    
+    # fighting
+    execute as @s at @s if entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
+        scoreboard players add @s timer 1
+        if score @s timer matches 20..:
+            say hit
+            execute at @p run playsound minecraft:block.anvil.land master @p ~ ~ ~ 1 2
+            scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health 1
+            scoreboard players reset @s timer
+    execute as @s at @s unless entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
+        scoreboard players reset @s timer

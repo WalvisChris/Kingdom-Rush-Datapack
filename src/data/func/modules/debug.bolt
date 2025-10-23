@@ -1,0 +1,74 @@
+import math
+
+function func:debug/showrange:
+    for i in range(100):
+        angle = 2 * math.pi / 100 * i
+        radius = 8
+        x = radius * math.sin(angle)
+        z = radius * math.cos(angle)
+        particle dust{scale:1.0f,color:[1.0f,0.0f,0.0f]} ~x ~ ~z
+
+function func:debug/raytrace:
+    for i in range(24):
+        z = i/3
+        particle dust{scale:1.0f,color:[0.0f,1.0f,0.0f]} ^ ^ ^z
+
+function func:debug/sinwave:
+    for i in range(32):
+        z = i/4
+        y = math.sin(z * (math.pi / 8)) * 8
+        particle dust{scale:1.0f,color:[1.0f,0.0f,0.0f]} ^ ^y ^z
+
+function func:debug/shoot/archer:
+    for i in range (16):
+        z = i / 2
+        #particle dust{scale:1.0f,color:[1.0f,1.0f,1.0f]} ^ ^ ^z
+        particle cloud ^ ^ ^z 0 0 0 0 1
+
+function func:debug/shoot/bomb:
+    #summon armor_stand ~ ~1 ~ {Motion:[0.0d,1.0d,1.0d],ArmorItems:[{},{},{},{id:"tnt",Count:1}],Invisible:1,Tags:["bomb"]}
+    for i in range(24):
+        z = i/3
+        y = math.sin(z * (math.pi / 8)) * 8
+        #particle dust{scale:1.0f,color:[1.0f,1.0f,1.0f]} ^ ^y ^z
+        particle cloud ^ ^y ^z 0 0 0 0 1
+
+function func:debug/shoot/wizzard:
+    for i in range(80):
+        z = i/10
+        x = math.sin(z * math.pi * (6 / 8)) / 1.5
+        #particle dust{scale:1.0f,color:[0.0f,0.0f,1.0f]} ^x ^ ^z
+        particle minecraft:soul_fire_flame ^x ^ ^z 0 0 0 0 1
+
+def getbarrate(value, max):
+    total_length = 10
+    filled = int((value / max) * total_length)
+    empty = total_length - filled
+    return "#" * filled + "_" * empty
+
+function func:debug/bar/showrate:
+    
+    execute if entity @s[tag=tower.archer]:
+        for i in range(21):
+            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 20)}"}}', CustomNameVisible:1}
+
+    execute if entity @s[tag=tower.wizzard]:
+        for i in range(21):
+            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 20)}"}}', CustomNameVisible:1}
+
+    execute if entity @s[tag=tower.bomb]:
+        for i in range(61):
+            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 60)}"}}', CustomNameVisible:1}
+
+function func:debug/bar/hiderate:
+    data merge entity @s {CustomNameVisible:0}
+
+def getbarhealth(value, max):
+    total_length = 5
+    filled = int((value / max) * total_length)
+    empty = total_length - filled
+    return "#" * filled + "_" * empty
+
+function func:debug/bar/showhealth:
+    for i in range (6):
+        execute if score @s health matches i run data merge entity @s {CustomName: f'{{"text":"{getbarhealth(i, 5)}"}}', CustomNameVisible:1}

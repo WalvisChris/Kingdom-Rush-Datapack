@@ -1,0 +1,25 @@
+{
+    "name": "mc project",
+    "require": [
+        "bolt",
+        "bolt_expressions"
+    ],
+    "data_pack": {
+        "load": ["src"],
+        "pack_format": 22
+    },
+    "pipeline": ["mecha"],
+    "output": "build",
+    "meta": {
+        "bolt": {
+            "entrypoint": [
+                "func:main",
+                "func:debug",
+                "func:enemy",
+                "func:tower",
+                "func:gui",
+                "func:soldier"
+            ]
+        }
+    }
+}

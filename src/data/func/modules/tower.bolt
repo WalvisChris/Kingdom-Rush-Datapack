@@ -1,0 +1,98 @@
+function func:tower/clear:
+    fill ~-2 ~-2 ~-2 ~2 ~3 ~2 air
+
+function func:tower/prefab1:
+    clone 6 0 33 2 3 29 ~-2 ~ ~-2
+
+function func:tower/prefab2:
+    clone 12 0 33 8 3 29 ~-2 ~ ~-2
+
+function func:tower/prefab3:
+    clone 18 0 33 14 3 29 ~-2 ~ ~-2
+
+function func:tower/prefab4:
+    clone 24 0 33 20 3 29 ~-2 ~ ~-2
+
+function func:tower/knight/soldiers:
+    summon armor_stand ~1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.a"}'}
+    summon armor_stand ~ ~ ~1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.b"}'}
+    summon armor_stand ~-1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.c"}'}
+    execute at @p run playsound minecraft:item.armor.equip_chain master @p ~ ~ ~ 1 1
+
+function func:tower/update:
+    # archer
+    execute if entity @s[tag=tower.archer]:
+        execute at @s anchored eyes if entity @e[tag=enemy,limit=1,sort=nearest,distance=..8]:
+            
+            tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] feet
+            execute unless score @s timer matches 20.. run scoreboard players add @s timer 1
+
+            # shoot
+            execute if score @s timer matches 20..:
+                function func:debug/shoot/archer
+                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health 1
+                execute at @p run playsound minecraft:entity.arrow.shoot master @p ~ ~ ~ 1 1.5
+                scoreboard players set @s timer 0
+        
+        execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
+        function func:debug/bar/hiderate
+
+    # knight
+    execute if entity @s[tag=tower.knight]:
+        
+        execute at @s if block ~5 ~-3 ~ smooth_sandstone unless entity @s[tag=full]:
+            say right
+            execute at @s positioned ~5 ~-2 ~ run function func:tower/knight/soldiers
+            tag @s add full
+            return fail
+        execute at @s if block ~ ~-3 ~-5 smooth_sandstone unless entity @s[tag=full]:
+            say up
+            execute at @s positioned ~ ~-2 ~-5 run function func:tower/knight/soldiers
+            return fail
+        execute at @s if block ~ ~-3 ~5 smooth_sandstone unless entity @s[tag=full]:
+            say down
+            execute at @s positioned ~ ~-2 ~5 run function func:tower/knight/soldiers
+            return fail
+        execute at @s if block ~-5 ~-3 ~ smooth_sandstone unless entity @s[tag=full]:
+            say left
+            execute at @s positioned ~-5 ~-2 ~ run function func:tower/knight/soldiers
+            tag @s add full
+            return fail
+
+    # wizzard
+    execute if entity @s[tag=tower.wizzard]:
+        execute at @s anchored eyes if entity @e[tag=enemy,limit=1,sort=nearest,distance=..8]:
+
+            tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] feet
+            execute unless score @s timer matches 20.. run scoreboard players add @s timer 1
+
+            # shoot
+            execute if score @s timer matches 20..:
+                function func:debug/shoot/wizzard
+                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health 2
+                execute at @p run playsound minecraft:entity.illusioner.cast_spell master @p ~ ~ ~ 1 2
+                scoreboard players set @s timer 0
+            
+        execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
+        function func:debug/bar/hiderate
+
+    # bomb
+    execute if entity @s[tag=tower.bomb]:
+        execute as @s at @s anchored feet if entity @e[tag=enemy,limit=1,sort=nearest,distance=..8]:
+            
+            tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] eyes
+            execute unless score @s timer matches 60.. run scoreboard players add @s timer 1
+            
+            # shoot
+            execute if score @s timer matches 60..:
+                function func:debug/shoot/bomb
+                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health 5
+                execute at @e[tag=enemy,limit=1,sort=nearest,distance=..8] run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0.1 1
+                execute at @p run playsound minecraft:entity.breeze.death master @p ~ ~ ~ 1 .1
+                scoreboard players set @s timer 0
+        
+        execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
+        function func:debug/bar/hiderate
+    
+    # extra
+    execute if score @s timer matches 0.. run function func:debug/bar/showrate

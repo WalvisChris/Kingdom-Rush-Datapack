@@ -1,0 +1,51 @@
+function func:enemy/spawnhusk:
+    summon husk ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.normal"]}
+
+function func:enemy/spawnwolf:
+    summon wolf ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.fast"]}
+
+function func:enemy/spawnstray:
+    summon stray ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.normal"],ArmorItems:[{},{},{},{id:"leather_helmet",Count:1,components:{dyed_color:{rgb:0}}}]}
+
+function func:enemy/spawnwave:
+    for a in range(5):
+        execute at @e[tag=path.start,limit=1,sort=random] positioned ~-2 ~ ~ run function func:enemy/spawnhusk
+    for b in range(5):
+        execute at @e[tag=path.start,limit=1,sort=random] run function func:enemy/spawnwolf
+    for c in range(5):
+        execute at @e[tag=path.start,limit=1,sort=random] positioned ~-1 ~ ~ run function func:enemy/spawnstray
+
+function func:enemy/enemymovement:
+
+    execute if entity @s[tag=inCombat]:
+        execute at @s run tp @s ~ ~ ~ facing entity @e[tag=soldier,limit=1,sort=nearest]
+
+    execute if entity @s[tag=speed.normal,tag=!inCombat]:
+        _speed = 0.1
+        if block ~ ~-2 ~ piston[facing=north] run tp @s ~ ~ ~-_speed 180 0
+        if block ~ ~-2 ~ piston[facing=east] run tp @s ~_speed ~ ~ 270 0
+        if block ~ ~-2 ~ piston[facing=south] run tp @s ~ ~ ~_speed 0 0
+        if block ~ ~-2 ~ piston[facing=west] run tp @s ~-_speed ~ ~ 90 0
+    
+    execute if entity @s[tag=speed.fast,tag=!inCombat]:
+        _speed = 0.3
+        if block ~ ~-2 ~ piston[facing=north] run tp @s ~ ~ ~-_speed 180 0
+        if block ~ ~-2 ~ piston[facing=east] run tp @s ~_speed ~ ~ 270 0
+        if block ~ ~-2 ~ piston[facing=south] run tp @s ~ ~ ~_speed 0 0
+        if block ~ ~-2 ~ piston[facing=west] run tp @s ~-_speed ~ ~ 90 0
+
+function func:enemy/update:
+    # set health
+    execute unless score @s health matches -10..:
+        scoreboard players set @s health 5
+
+    # healthbar
+    execute if score @s health matches 0..:
+        function func:debug/bar/showhealth
+
+    # movement
+    execute at @s if block ~ ~-2 ~ piston run function func:enemy/enemymovement
+    
+    # death check
+    execute if score @s health matches ..0:
+        kill @s
