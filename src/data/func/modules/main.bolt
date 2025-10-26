@@ -7,3 +7,5 @@ function func:update:
     execute as @e[tag=gui] run function func:gui/update
     # soldier
     execute as @e[tag=soldier] run function func:soldier/update
+    # bomb placeholder
+    execute as @e[tag=bomb.placeholder] run function func:tower/bomb/placeholder

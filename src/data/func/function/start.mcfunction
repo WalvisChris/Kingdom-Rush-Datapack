@@ -35,3 +35,4 @@ summon armor_stand 0 0 2 {NoGravity:1,Invisible:1,Tags:["path","path.start"]}
 # extra
 kill @e[tag=enemy]
 kill @e[tag=soldier]
+kill @e[tag=bomb.placeholder]

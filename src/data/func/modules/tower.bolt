@@ -89,25 +89,35 @@ function func:tower/update:
             
             # shoot
             execute if score @s timer matches 60..:
-                scoreboard players set @s animate 0
+                say spawning
+                summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder"]}
+                execute at @s rotated as @s run teleport @e[tag=bomb.placeholder,limit=1,sort=nearest,distance=..1] ~ ~ ~ ~ ~
+                execute at @s run scoreboard players set @e[tag=bomb.placeholder,limit=1,sort=nearest,distance=..1] animate 0
                 scoreboard players set @s timer 0
         
         execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
         function func:debug/bar/hiderate
-
-        # animation
-        execute if score @s animate matches 0..:
-            for frame in range(24):
-                if score @s animate matches frame:
-                    z = frame/3
-                    y = math.sin(z * (math.pi / 8)) * 8
-                    execute at @s particle cloud ^ ^y ^z 0 0 0 0 1
-        execute if score @s animate matches 24:
-            execute as @e[tag=enemy,limit=1,sort=nearest] at @s run scoreboard players remove @e[tag=enemy,distance=..2] health 5
-            execute at @e[tag=enemy,limit=1,sort=nearest] run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0.1 1
-            execute at @p run playsound minecraft:entity.breeze.death master @p ~ ~ ~ 1 .1
-        scoreboard players reset @s[scores={animate=24..}] animate
-        scoreboard players add @s[scores={animate=0..24}] animate 1
     
     # extra
     execute if score @s timer matches 0.. run function func:debug/bar/showrate
+
+# bomb shooting
+function func:tower/bomb/placeholder:
+    execute if score @s animate matches 0..:
+        for frame in range(24):
+            if score @s animate matches frame:
+                z = frame/3
+                y = math.sin(z * (math.pi / 8)) * 8
+                execute at @s run particle cloud ^ ^y ^z 0 0 0 0 1
+        execute if score @s animate matches 24:
+            
+            # TODO: not at @s because the placeholder stays in the building. tag the target zombie and run logic at him
+            
+            execute at @s run scoreboard players remove @e[tag=enemy,distance=..3] health 1
+            execute at @s run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0 1
+            execute at @p run playsound entity.breeze.death master @p ~ ~ ~ 1 .1
+            kill @s
+        scoreboard players reset @s[scores={animate=24..}] animate
+        scoreboard players add @s[scores={animate=0..24}] animate 1
+
+    execute if score @s timer matches ..24 run scoreboard players add @s timer 1
