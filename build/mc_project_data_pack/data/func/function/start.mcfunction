@@ -1,7 +1,8 @@
 say onLoad
 scoreboard objectives add timer dummy
 scoreboard objectives add health dummy
-scoreboard objectives setdisplay sidebar timer
+scoreboard objectives add animate dummy
+scoreboard objectives setdisplay sidebar animate
 team add noCollision
 team modify noCollision collisionRule never
 kill @e[tag=buildspot]
@@ -12,6 +13,7 @@ summon armor_stand -33 2 15 {NoGravity: 1, Invisible: 1, Tags: ["buildspot"]}
 summon armor_stand -38 2 5 {NoGravity: 1, Invisible: 1, Tags: ["buildspot"]}
 summon armor_stand -23 2 0 {NoGravity: 1, Invisible: 1, Tags: ["buildspot"]}
 summon armor_stand -23 2 -5 {NoGravity: 1, Invisible: 1, Tags: ["buildspot"]}
+summon armor_stand -33 2 -5 {NoGravity: 1, Invisible: 1, Tags: ["buildspot"]}
 execute as @e[tag=buildspot] at @s run function func:tower/clear
 execute as @e[tag=buildspot] at @s positioned ~ ~-2 ~ run function func:gui/spawn
 kill @e[type=item]

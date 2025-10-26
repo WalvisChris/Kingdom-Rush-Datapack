@@ -1,3 +1,5 @@
+import math
+
 function func:tower/clear:
     fill ~-2 ~-2 ~-2 ~2 ~3 ~2 air
 
@@ -14,9 +16,9 @@ function func:tower/prefab4:
     clone 24 0 33 20 3 29 ~-2 ~ ~-2
 
 function func:tower/knight/soldiers:
-    summon armor_stand ~1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.a"}'}
-    summon armor_stand ~ ~ ~1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.b"}'}
-    summon armor_stand ~-1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"leather_helmet",Count:1}],HandItems:[{},{id:"wooden_sword",Count:1}],ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.c"}'}
+    summon armor_stand ~1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.a"}'}
+    summon armor_stand ~ ~ ~1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.b"}'}
+    summon armor_stand ~-1 ~ ~-1 {Tags:["soldier"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.c"}'}
     execute at @p run playsound minecraft:item.armor.equip_chain master @p ~ ~ ~ 1 1
 
 function func:tower/update:
@@ -40,20 +42,20 @@ function func:tower/update:
     # knight
     execute if entity @s[tag=tower.knight]:
         
-        execute at @s if block ~5 ~-3 ~ smooth_sandstone unless entity @s[tag=full]:
+        execute at @s if block ~5 ~-3 ~ beehive unless entity @s[tag=full]:
             say right
             execute at @s positioned ~5 ~-2 ~ run function func:tower/knight/soldiers
             tag @s add full
             return fail
-        execute at @s if block ~ ~-3 ~-5 smooth_sandstone unless entity @s[tag=full]:
+        execute at @s if block ~ ~-3 ~-5 beehive unless entity @s[tag=full]:
             say up
             execute at @s positioned ~ ~-2 ~-5 run function func:tower/knight/soldiers
             return fail
-        execute at @s if block ~ ~-3 ~5 smooth_sandstone unless entity @s[tag=full]:
+        execute at @s if block ~ ~-3 ~5 beehive unless entity @s[tag=full]:
             say down
             execute at @s positioned ~ ~-2 ~5 run function func:tower/knight/soldiers
             return fail
-        execute at @s if block ~-5 ~-3 ~ smooth_sandstone unless entity @s[tag=full]:
+        execute at @s if block ~-5 ~-3 ~ beehive unless entity @s[tag=full]:
             say left
             execute at @s positioned ~-5 ~-2 ~ run function func:tower/knight/soldiers
             tag @s add full
@@ -85,14 +87,25 @@ function func:tower/update:
             
             # shoot
             execute if score @s timer matches 60..:
-                function func:debug/shoot/bomb
-                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health 5
-                execute at @e[tag=enemy,limit=1,sort=nearest,distance=..8] run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0.1 1
-                execute at @p run playsound minecraft:entity.breeze.death master @p ~ ~ ~ 1 .1
+                scoreboard players set @s animate 0
                 scoreboard players set @s timer 0
         
         execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
         function func:debug/bar/hiderate
+
+        # animation
+        execute if score @s animate matches 0..:
+            for frame in range(24):
+                if score @s animate matches frame:
+                    z = frame/3
+                    y = math.sin(z * (math.pi / 8)) * 8
+                    execute at @s particle cloud ^ ^y ^z 0 0 0 0 1
+        execute if score @s animate matches 24:
+            execute as @e[tag=enemy,limit=1,sort=nearest] at @s run scoreboard players remove @e[tag=enemy,distance=..2] health 5
+            execute at @e[tag=enemy,limit=1,sort=nearest] run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0.1 1
+            execute at @p run playsound minecraft:entity.breeze.death master @p ~ ~ ~ 1 .1
+        scoreboard players reset @s[scores={animate=24..}] animate
+        scoreboard players add @s[scores={animate=0..24}] animate 1
     
     # extra
     execute if score @s timer matches 0.. run function func:debug/bar/showrate

@@ -1,3 +1,24 @@
-execute as @s at @s anchored feet if entity @e[tag=enemy, limit=1, sort=nearest, distance=..8] run function func:tower/update/nested_execute_12
-execute at @s unless entity @e[tag=enemy, limit=1, sort=nearest, distance=..8] run scoreboard players reset @s timer
-function func:debug/bar/hiderate
+execute if score @s animate matches 0 at @s run particle cloud ^ ^ ^ 0 0 0 0 1
+execute if score @s animate matches 1 at @s run particle cloud ^ ^1.0442095377604126 ^0.3333333333333333 0 0 0 0 1
+execute if score @s animate matches 2 at @s run particle cloud ^ ^2.070552360820166 ^0.6666666666666666 0 0 0 0 1
+execute if score @s animate matches 3 at @s run particle cloud ^ ^3.0614674589207183 ^1.0 0 0 0 0 1
+execute if score @s animate matches 4 at @s run particle cloud ^ ^3.9999999999999996 ^1.3333333333333333 0 0 0 0 1
+execute if score @s animate matches 5 at @s run particle cloud ^ ^4.870091432069765 ^1.6666666666666667 0 0 0 0 1
+execute if score @s animate matches 6 at @s run particle cloud ^ ^5.656854249492381 ^2.0 0 0 0 0 1
+execute if score @s animate matches 7 at @s run particle cloud ^ ^6.346826722329881 ^2.3333333333333335 0 0 0 0 1
+execute if score @s animate matches 8 at @s run particle cloud ^ ^6.928203230275509 ^2.6666666666666665 0 0 0 0 1
+execute if score @s animate matches 9 at @s run particle cloud ^ ^7.391036260090294 ^3.0 0 0 0 0 1
+execute if score @s animate matches 10 at @s run particle cloud ^ ^7.7274066103125465 ^3.3333333333333335 0 0 0 0 1
+execute if score @s animate matches 11 at @s run particle cloud ^ ^7.931558890990483 ^3.6666666666666665 0 0 0 0 1
+execute if score @s animate matches 12 at @s run particle cloud ^ ^8.0 ^4.0 0 0 0 0 1
+execute if score @s animate matches 13 at @s run particle cloud ^ ^7.931558890990484 ^4.333333333333333 0 0 0 0 1
+execute if score @s animate matches 14 at @s run particle cloud ^ ^7.7274066103125465 ^4.666666666666667 0 0 0 0 1
+execute if score @s animate matches 15 at @s run particle cloud ^ ^7.391036260090294 ^5.0 0 0 0 0 1
+execute if score @s animate matches 16 at @s run particle cloud ^ ^6.92820323027551 ^5.333333333333333 0 0 0 0 1
+execute if score @s animate matches 17 at @s run particle cloud ^ ^6.346826722329881 ^5.666666666666667 0 0 0 0 1
+execute if score @s animate matches 18 at @s run particle cloud ^ ^5.656854249492381 ^6.0 0 0 0 0 1
+execute if score @s animate matches 19 at @s run particle cloud ^ ^4.870091432069767 ^6.333333333333333 0 0 0 0 1
+execute if score @s animate matches 20 at @s run particle cloud ^ ^3.9999999999999996 ^6.666666666666667 0 0 0 0 1
+execute if score @s animate matches 21 at @s run particle cloud ^ ^3.061467458920719 ^7.0 0 0 0 0 1
+execute if score @s animate matches 22 at @s run particle cloud ^ ^2.070552360820168 ^7.333333333333333 0 0 0 0 1
+execute if score @s animate matches 23 at @s run particle cloud ^ ^1.0442095377604126 ^7.666666666666667 0 0 0 0 1
