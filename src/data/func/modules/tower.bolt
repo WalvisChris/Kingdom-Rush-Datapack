@@ -50,10 +50,12 @@ function func:tower/update:
         execute at @s if block ~ ~-3 ~-5 beehive unless entity @s[tag=full]:
             say up
             execute at @s positioned ~ ~-2 ~-5 run function func:tower/knight/soldiers
+            tag @s add full
             return fail
         execute at @s if block ~ ~-3 ~5 beehive unless entity @s[tag=full]:
             say down
             execute at @s positioned ~ ~-2 ~5 run function func:tower/knight/soldiers
+            tag @s add full
             return fail
         execute at @s if block ~-5 ~-3 ~ beehive unless entity @s[tag=full]:
             say left
