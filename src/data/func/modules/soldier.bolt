@@ -1,20 +1,27 @@
+DAMAGE_LOW = 1
+DAMAGE_MED = 2
+DAMAGE_HIGH = 5
+
 function func:soldier/armor1:
     item replace entity @s armor.chest with minecraft:leather_chestplate
     item replace entity @s armor.feet with minecraft:leather_boots
     item replace entity @s armor.legs with minecraft:leather_leggings
     item replace entity @s weapon.offhand with minecraft:wooden_sword
+    data merge entity @s {Tags:["soldier","armor1"]}
 
 function func:soldier/armor2:
     item replace entity @s armor.chest with minecraft:iron_chestplate
     item replace entity @s armor.feet with minecraft:iron_boots
     item replace entity @s armor.legs with minecraft:iron_leggings
     item replace entity @s weapon.offhand with minecraft:iron_sword
+    data merge entity @s {Tags:["soldier","armor2"]}
 
 function func:soldier/armor3:
-    item replace entity @s armor.chest with minecraft:golden_chestplate
-    item replace entity @s armor.feet with minecraft:golden_boots
-    item replace entity @s armor.legs with minecraft:golden_leggings
-    item replace entity @s weapon.offhand with minecraft:golden_sword
+    item replace entity @s armor.chest with minecraft:diamond_chestplate
+    item replace entity @s armor.feet with minecraft:diamond_boots
+    item replace entity @s armor.legs with minecraft:diamond_leggings
+    item replace entity @s weapon.offhand with minecraft:diamond_sword
+    data merge entity @s {Tags:["soldier","armor3"]}
 
 function func:soldier/update:
     # initiate fight
@@ -30,7 +37,9 @@ function func:soldier/update:
             scoreboard players set @s animate 0
             execute at @p run playsound minecraft:block.anvil.land master @p ~ ~ ~ 1 2
             execute at @p run playsound minecraft:entity.pillager.ambient master @p ~ ~ ~ 1 1.8
-            scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health 1
+            execute if entity @s[tag=armor1] run scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health DAMAGE_LOW
+            execute if entity @s[tag=armor2] run scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health DAMAGE_MED
+            execute if entity @s[tag=armor3] run scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health DAMAGE_HIGH
             scoreboard players reset @s timer
     execute as @s at @s unless entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
         scoreboard players reset @s timer
