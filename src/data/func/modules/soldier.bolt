@@ -1,3 +1,21 @@
+function func:soldier/armor1:
+    item replace entity @s armor.chest with minecraft:leather_chestplate
+    item replace entity @s armor.feet with minecraft:leather_boots
+    item replace entity @s armor.legs with minecraft:leather_leggings
+    item replace entity @s weapon.offhand with minecraft:wooden_sword
+
+function func:soldier/armor2:
+    item replace entity @s armor.chest with minecraft:iron_chestplate
+    item replace entity @s armor.feet with minecraft:iron_boots
+    item replace entity @s armor.legs with minecraft:iron_leggings
+    item replace entity @s weapon.offhand with minecraft:iron_sword
+
+function func:soldier/armor3:
+    item replace entity @s armor.chest with minecraft:golden_chestplate
+    item replace entity @s armor.feet with minecraft:golden_boots
+    item replace entity @s armor.legs with minecraft:golden_leggings
+    item replace entity @s weapon.offhand with minecraft:golden_sword
+
 function func:soldier/update:
     # initiate fight
     execute as @s at @s if entity @e[tag=enemy,limit=1,sort=nearest,distance=..1] unless entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
@@ -11,6 +29,7 @@ function func:soldier/update:
             say hit
             scoreboard players set @s animate 0
             execute at @p run playsound minecraft:block.anvil.land master @p ~ ~ ~ 1 2
+            execute at @p run playsound minecraft:entity.pillager.ambient master @p ~ ~ ~ 1 1.8
             scoreboard players remove @e[tag=inCombat,distance=..1,limit=1,sort=nearest] health 1
             scoreboard players reset @s timer
     execute as @s at @s unless entity @e[tag=inCombat,distance=..1,limit=1,sort=nearest]:
