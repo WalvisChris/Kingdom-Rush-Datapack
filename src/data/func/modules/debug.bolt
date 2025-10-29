@@ -22,53 +22,55 @@ function func:debug/sinwave:
 function func:debug/shoot/archer:
     for i in range (16):
         z = i / 2
-        #particle dust{scale:1.0f,color:[1.0f,1.0f,1.0f]} ^ ^ ^z
         particle cloud ^ ^ ^z 0 0 0 0 1
 
 function func:debug/shoot/bomb:
     #summon armor_stand ~ ~1 ~ {Motion:[0.0d,1.0d,1.0d],ArmorItems:[{},{},{},{id:"tnt",Count:1}],Invisible:1,Tags:["bomb"]}
-    for i in range(24):
+    for i in range(27):
         z = i/3
-        y = math.sin(z * (math.pi / 8)) * 8
-        #particle dust{scale:1.0f,color:[1.0f,1.0f,1.0f]} ^ ^y ^z
+        y = math.sin(z * (math.pi / 7)) * 7
         particle cloud ^ ^y ^z 0 0 0 0 1
 
 function func:debug/shoot/wizzard:
     for i in range(80):
         z = i/10
         x = math.sin(z * math.pi * (6 / 8)) / 1.5
-        #particle dust{scale:1.0f,color:[0.0f,0.0f,1.0f]} ^x ^ ^z
         particle minecraft:soul_fire_flame ^x ^ ^z 0 0 0 0 1
 
-def getbarrate(value, max):
-    total_length = 10
-    filled = int((value / max) * total_length)
-    empty = total_length - filled
-    return "#" * filled + "_" * empty
+def getReloadbarCommand(value, max):
+    f = int(value / max * 10)
+    bar = "#" * f + "_" * (10 - f)
+    return f'data merge entity @s {{CustomName:\'{{"text":"{bar}"}}\',CustomNameVisible:1}}'
 
 function func:debug/bar/showrate:
-    
     execute if entity @s[tag=tower.archer]:
         for i in range(21):
-            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 20)}"}}', CustomNameVisible:1}
+            execute if score @s timer matches i run raw getReloadbarCommand(i, 20)
 
     execute if entity @s[tag=tower.wizzard]:
         for i in range(21):
-            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 20)}"}}', CustomNameVisible:1}
+            execute if score @s timer matches i run raw getReloadbarCommand(i, 20)
 
     execute if entity @s[tag=tower.bomb]:
         for i in range(61):
-            execute if score @s timer matches i run data merge entity @s {CustomName: f'{{"text":"{getbarrate(i, 60)}"}}', CustomNameVisible:1}
+            execute if score @s timer matches i run raw getReloadbarCommand(i, 60)
 
-function func:debug/bar/hiderate:
+function func:debug/bar/hide:
     data merge entity @s {CustomNameVisible:0}
 
-def getbarhealth(value, max):
-    total_length = 5
-    filled = int((value / max) * total_length)
-    empty = total_length - filled
-    return "#" * filled + "_" * empty
+def getHealthbarCommand(value, max):
+    f = int(value / max * 5)
+    pct = value / max
+    if pct > 0.75:
+        color = "green"
+    elif pct > 0.5:
+        color = "yellow"
+    elif pct > 0.25:
+        color = "gold"
+    else:
+        color = "red"
+    return f'data merge entity @s {{CustomName:\'["",{{"text":"{"█"*f}","color":"{color}"}},{{"text":"{"_"*(5-f)}","color":"dark_gray"}}]\',CustomNameVisible:1}}'
 
 function func:debug/bar/showhealth:
     for i in range (6):
-        execute if score @s health matches i run data merge entity @s {CustomName: f'{{"text":"{getbarhealth(i, 5)}"}}', CustomNameVisible:1}
+        execute if score @s health matches i run raw getHealthbarCommand(i, 5)

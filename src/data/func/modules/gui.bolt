@@ -8,13 +8,6 @@ function func:gui/start:
     item replace entity @s container.12 with iron_sword[minecraft:custom_name='{"text":"Knight Tower","italic":false}'] 1
     item replace entity @s container.14 with amethyst_shard[minecraft:custom_name='{"text":"Wizzard Tower","italic":false}'] 1
     item replace entity @s container.16 with tnt[minecraft:custom_name='{"text":"Bomb Tower","italic":false}'] 1
-    # fill
-    for x in range (9):
-        raw f"item replace entity @s container.{x} with black_stained_glass_pane 1"
-    for y in range (18, 27):
-        raw f"item replace entity @s container.{y} with black_stained_glass_pane 1"
-    item replace entity @s container.9 with black_stained_glass_pane 1
-    item replace entity @s container.17 with black_stained_glass_pane 1
     # collision
     team join noCollision @s
 

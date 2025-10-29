@@ -1,8 +1,22 @@
 import math
 
-DAMAGE_LOW = 1
-DAMAGE_MED = 2
-DAMAGE_HIGH = 5
+# archer damage
+aDamageLow = 1
+aDamageMed = 2
+aDamageHigh = 3
+aDamageExtreme = 4
+
+# wizzard damage
+wDamageLow = 2
+wDamageMed = 4
+wDamageHigh = 6
+wDamageExtreme = 8
+
+# bomb damage
+bDamageLow = 3
+bDamageMed = 6
+bDamageHigh = 9
+bDamageExtreme = 12
 
 function func:tower/clear:
     fill ~-2 ~-2 ~-2 ~2 ~3 ~2 air
@@ -16,6 +30,9 @@ function func:tower/archer2:
 function func:tower/archer3:
     clone 6 0 21 2 3 17 ~-2 ~-2 ~-2
 
+function func:tower/archer4:
+    clone 6 0 15 2 3 11 ~-2 ~-2 ~-2
+
 function func:tower/knight1:
     clone 12 0 33 8 3 29 ~-2 ~-2 ~-2
 
@@ -24,6 +41,9 @@ function func:tower/knight2:
 
 function func:tower/knight3:
     clone 12 0 21 8 3 17 ~-2 ~-2 ~-2
+
+function func:tower/knight4:
+    clone 12 0 15 8 3 11 ~-2 ~-2 ~-2
 
 function func:tower/wizzard1:
     clone 18 0 33 14 3 29 ~-2 ~-2 ~-2
@@ -34,6 +54,9 @@ function func:tower/wizzard2:
 function func:tower/wizzard3:
     clone 18 0 21 14 3 17 ~-2 ~-2 ~-2
 
+function func:tower/wizzard4:
+    clone 18 0 15 14 3 11 ~-2 ~-2 ~-2
+
 function func:tower/bomb1:
     clone 24 0 33 20 3 29 ~-2 ~-2 ~-2
 
@@ -43,20 +66,32 @@ function func:tower/bomb2:
 function func:tower/bomb3:
     clone 24 0 21 20 3 17 ~-2 ~-2 ~-2
 
+function func:tower/bomb4:
+    clone 24 0 15 20 3 11 ~-2 ~-2 ~-2
+
 function func:tower/upgrade_all:
-    say checking archer1
+    # archer1
     execute if entity @s[tag=tower.archer1,tag=!upgraded]:
         execute at @s run function func:tower/archer2
         tag @s add tower.archer2
         tag @s add upgraded
         tag @s remove tower.archer1
-    say checking archer2
+
+    # archer2
     execute if entity @s[tag=tower.archer2,tag=!upgraded]:
         execute at @s run function func:tower/archer3
         tag @s add tower.archer3
         tag @s add upgraded
         tag @s remove tower.archer2
-    say checking knight1
+    
+    # archer3
+    execute if entity @s[tag=tower.archer3,tag=!upgraded]:
+        execute at @s run function func:tower/archer4
+        tag @s add tower.archer4
+        tag @s add upgraded
+        tag @s remove tower.archer3
+    
+    # knight1
     execute if entity @s[tag=tower.knight1,tag=!upgraded]:
         execute at @s run function func:tower/knight2
         kill @e[type=item]
@@ -64,13 +99,13 @@ function func:tower/upgrade_all:
         tag @s add upgraded
         tag @s remove tower.knight1
 
-        say upgrading armor1
+        # armor1 to armor2
         execute if entity @s[tag=soldiers.right] at @s positioned ~5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor2
         execute if entity @s[tag=soldiers.up] at @s positioned ~ ~-2 ~-5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor2
         execute if entity @s[tag=soldiers.down] at @s positioned ~ ~-2 ~5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor2
         execute if entity @s[tag=soldiers.left] at @s positioned ~-5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor2
         
-    say checking knight2
+    # knight2
     execute if entity @s[tag=tower.knight2,tag=!upgraded]:
         execute at @s run function func:tower/knight3
         kill @e[type=item]
@@ -78,46 +113,81 @@ function func:tower/upgrade_all:
         tag @s add upgraded
         tag @s remove tower.knight2
 
-        say upgrading armor2
+        # armor2 to armor3
         execute if entity @s[tag=soldiers.right] at @s positioned ~5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor3
         execute if entity @s[tag=soldiers.up] at @s positioned ~ ~-2 ~-5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor3
         execute if entity @s[tag=soldiers.down] at @s positioned ~ ~-2 ~5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor3
         execute if entity @s[tag=soldiers.left] at @s positioned ~-5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor3
     
-    say checking wizzard1
+    # knight3
+    execute if entity @s[tag=tower.knight3,tag=!upgraded]:
+        execute at @s run function func:tower/knight4
+        kill @e[type=item]
+        tag @s add tower.knight4
+        tag @s add upgraded
+        tag @s remove tower.knight3
+
+        # armor3 to armor4
+        execute if entity @s[tag=soldiers.right] at @s positioned ~5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor4
+        execute if entity @s[tag=soldiers.up] at @s positioned ~ ~-2 ~-5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor4
+        execute if entity @s[tag=soldiers.down] at @s positioned ~ ~-2 ~5 run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor4
+        execute if entity @s[tag=soldiers.left] at @s positioned ~-5 ~-2 ~ run execute as @e[tag=soldier,limit=3,sort=nearest,distance=..2] run function func:soldier/armor4
+    
+    # wizzard1
     execute if entity @s[tag=tower.wizzard1,tag=!upgraded]:
         execute at @s run function func:tower/wizzard2
         tag @s add tower.wizzard2
         tag @s add upgraded
         tag @s remove tower.wizzard1
-    say checking wizzard2
+    
+    # wizzard2
     execute if entity @s[tag=tower.wizzard2,tag=!upgraded]:
         execute at @s run function func:tower/wizzard3
         tag @s add tower.wizzard3
         tag @s add upgraded
         tag @s remove tower.wizzard2
-    say checking bomb1
+    
+    # wizzard3
+    execute if entity @s[tag=tower.wizzard3,tag=!upgraded]:
+        execute at @s run function func:tower/wizzard4
+        tag @s add tower.wizzard4
+        tag @s add upgraded
+        tag @s remove tower.wizzard3
+
+    # bomb1
     execute if entity @s[tag=tower.bomb1,tag=!upgraded]:
         execute at @s run function func:tower/bomb2
         tag @s add tower.bomb2
         tag @s add upgraded
         tag @s remove tower.bomb1
-    say checking bomb2
+    
+    # bomb2
     execute if entity @s[tag=tower.bomb2,tag=!upgraded]:
         execute at @s run function func:tower/bomb3
         tag @s add tower.bomb3
         tag @s add upgraded
         tag @s remove tower.bomb2
+    
+    # bomb3
+    execute if entity @s[tag=tower.bomb3,tag=!upgraded]:
+        execute at @s run function func:tower/bomb4
+        tag @s add tower.bomb4
+        tag @s add upgraded
+        tag @s remove tower.bomb3
+
+    # SFX
     execute if entity @s[tag=upgraded] at @p run playsound minecraft:block.enchantment_table.use master @p ~ ~ ~ 1 1.5
     execute if entity @s[tag=upgraded] at @p run playsound block.anvil.use master @p ~ ~ ~ 1 1.7
     tag @s[tag=upgraded] remove upgraded
 
+# knight summon soldiers
 function func:tower/knight/soldiers:
     summon armor_stand ~1 ~ ~-1 {Tags:["soldier","armor1"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.a"}'}
     summon armor_stand ~ ~ ~1 {Tags:["soldier","armor1"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.b"}'}
     summon armor_stand ~-1 ~ ~-1 {Tags:["soldier","armor1"],ArmorItems:[{id:"leather_boots",Count:1},{id:"leather_leggings",Count:1},{id:"leather_chestplate",Count:1},{id:"minecraft:player_head",count:1,components:{"minecraft:custom_name":'{"text":"Knight","color":"gold","underlined":true,"bold":true,"italic":false}',"minecraft:lore":['{"text":"Custom Head ID: 117136","color":"gray","italic":false}','{"text":"www.minecraft-heads.com","color":"blue","italic":false}'],"minecraft:profile":{id:[I;828922402,-1626127593,-1586408291,1718285182],properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzJmNTYwYzZlYmYxMDY2OGMyYzY0OWQ2YjJiNDI5MzVhOGE2NjBmMjlmZWYwNTZjNTE4Mzk3ODQ2ZDdlMTRmIn19fQ=="}]}}}],HandItems:[{},{id:"wooden_sword",Count:1}],Pose:{RightArm:[350.0f,0.0f,10.0f],LeftArm:[350.0f,0.0f,350.0f]},ShowArms:1,NoBasePlate:1,CustomName:'{"text":"soldier.c"}'}
     execute at @p run playsound minecraft:item.armor.equip_chain master @p ~ ~ ~ 1 1
 
+# update
 function func:tower/update:
     # archer
     execute if entity @s[tag=tower.archer]:
@@ -129,12 +199,15 @@ function func:tower/update:
             # shoot
             execute if score @s timer matches 20..:
                 function func:debug/shoot/archer
-                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health DAMAGE_LOW
+                execute if entity @s[tag=tower.archer1] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageLow 
+                execute if entity @s[tag=tower.archer2] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageMed 
+                execute if entity @s[tag=tower.archer3] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageHigh 
+                execute if entity @s[tag=tower.archer4] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageExtreme
                 execute at @p run playsound minecraft:entity.arrow.shoot master @p ~ ~ ~ 1 1.5
                 scoreboard players set @s timer 0
         
         execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
-        function func:debug/bar/hiderate
+        function func:debug/bar/hide
 
     # knight
     execute if entity @s[tag=tower.knight]:
@@ -166,12 +239,15 @@ function func:tower/update:
             # shoot
             execute if score @s timer matches 20..:
                 function func:debug/shoot/wizzard
-                scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health DAMAGE_MED
+                execute if entity @s[tag=tower.wizzard1] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageLow
+                execute if entity @s[tag=tower.wizzard2] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageMed
+                execute if entity @s[tag=tower.wizzard3] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageHigh
+                execute if entity @s[tag=tower.wizzard4] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageExtreme
                 execute at @p run playsound minecraft:entity.illusioner.cast_spell master @p ~ ~ ~ 1 2
                 scoreboard players set @s timer 0
             
         execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
-        function func:debug/bar/hiderate
+        function func:debug/bar/hide
 
     # bomb
     execute if entity @s[tag=tower.bomb]:
@@ -184,13 +260,18 @@ function func:tower/update:
             execute if score @s timer matches 60..:
                 
                 tag @e[tag=enemy,limit=1,sort=nearest,distance=..8] add bomb.target
-                summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder"]}
+
+                execute if entity @s[tag=tower.bomb1] run summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder","tower.bomb1"]}
+                execute if entity @s[tag=tower.bomb2] run summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder","tower.bomb2"]}
+                execute if entity @s[tag=tower.bomb3] run summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder","tower.bomb3"]}
+                execute if entity @s[tag=tower.bomb4] run summon armor_stand ~ ~ ~ {Invisible:1,NoGravity:1,Tags:["bomb.placeholder","tower.bomb4"]}
+
                 execute at @s rotated as @s run teleport @e[tag=bomb.placeholder,limit=1,sort=nearest,distance=..1] ~ ~ ~ ~ ~
                 execute at @s run scoreboard players set @e[tag=bomb.placeholder,limit=1,sort=nearest,distance=..1] animate 0
                 scoreboard players set @s timer 0
         
         execute at @s unless entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] run scoreboard players reset @s timer
-        function func:debug/bar/hiderate
+        function func:debug/bar/hide
     
     # debug
     execute if score @s timer matches 0.. run function func:debug/bar/showrate
@@ -204,8 +285,12 @@ function func:tower/bomb/placeholder:
                 y = math.sin(z * (math.pi / 8)) * 8
                 execute at @s run particle cloud ^ ^y ^z 0 0 0 0 1
         execute if score @s animate matches 24:
-            
-            execute at @e[tag=bomb.target,limit=1,sort=nearest] run scoreboard players remove @e[tag=enemy,distance=..3] health DAMAGE_HIGH
+
+            execute if entity @s[tag=tower.bomb1] at @e[tag=bomb.target,limit=1,sort=nearest] run scoreboard players remove @e[tag=enemy,distance=..3] health bDamageLow
+            execute if entity @s[tag=tower.bomb2] at @e[tag=bomb.target,limit=1,sort=nearest] run scoreboard players remove @e[tag=enemy,distance=..3] health bDamageMed
+            execute if entity @s[tag=tower.bomb3] at @e[tag=bomb.target,limit=1,sort=nearest] run scoreboard players remove @e[tag=enemy,distance=..3] health bDamageHigh
+            execute if entity @s[tag=tower.bomb4] at @e[tag=bomb.target,limit=1,sort=nearest] run scoreboard players remove @e[tag=enemy,distance=..3] health bDamageExtreme
+
             execute at @e[tag=bomb.target,limit=1,sort=nearest] run particle minecraft:gust_emitter_small ~ ~ ~ 0 0 0 0 1
             tag @e[tag=bomb.target,limit=1,sort=nearest] remove bomb.target
             execute at @p run playsound entity.breeze.death master @p ~ ~ ~ 1 .1

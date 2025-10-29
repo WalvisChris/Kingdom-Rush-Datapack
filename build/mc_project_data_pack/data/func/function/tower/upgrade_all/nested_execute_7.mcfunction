@@ -1,4 +1,4 @@
-execute at @s run function func:tower/bomb3
-tag @s add tower.bomb3
+execute at @s run function func:tower/wizzard3
+tag @s add tower.wizzard3
 tag @s add upgraded
-tag @s remove tower.bomb2
+tag @s remove tower.wizzard2
