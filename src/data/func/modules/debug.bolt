@@ -59,7 +59,8 @@ function func:debug/bar/hide:
     data merge entity @s {CustomNameVisible:0}
 
 def getHealthbarCommand(value, max):
-    f = int(value / max * 5)
+    f = int(max - value)
+    # f = int(max / value * 5)
     pct = value / max
     if pct > 0.75:
         color = "green"
@@ -69,8 +70,29 @@ def getHealthbarCommand(value, max):
         color = "gold"
     else:
         color = "red"
-    return f'data merge entity @s {{CustomName:\'["",{{"text":"{"█"*f}","color":"{color}"}},{{"text":"{"_"*(5-f)}","color":"dark_gray"}}]\',CustomNameVisible:1}}'
+    return f'data merge entity @s {{CustomName:\'["",{{"text":"{"█"*(max-f)}","color":"{color}"}},{{"text":"{"█"*f}","color":"dark_gray"}}]\',CustomNameVisible:1}}'
 
-function func:debug/bar/showhealth:
-    for i in range (6):
-        execute if score @s health matches i run raw getHealthbarCommand(i, 5)
+function func:debug/bar/showhealth:    
+    execute if entity @s[tag=enemy.husk]:
+        for i in range(6):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 5)
+
+    execute if entity @s[tag=enemy.wolf]:
+            for i in range(5):
+                execute if score @s health matches i run raw getHealthbarCommand(i, 4)
+
+    execute if entity @s[tag=enemy.stray]:
+            for i in range(5):
+                execute if score @s health matches i run raw getHealthbarCommand(i, 4)
+    
+    execute if entity @s[tag=enemy.bigfoot]:
+        for i in range(9):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 8)
+    
+    execute if entity @s[tag=enemy.spider]:
+        for i in range(4):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 3)
+    
+    execute if entity @s[tag=enemy.bigspider]:
+        for i in range(6):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 5)

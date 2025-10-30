@@ -1,7 +1,9 @@
 scoreboard objectives add timer dummy
 scoreboard objectives add health dummy
 scoreboard objectives add animate dummy
-scoreboard objectives setdisplay sidebar timer
+scoreboard objectives add game dummy
+scoreboard players set money game 0
+scoreboard objectives setdisplay sidebar game
 team add noCollision
 team modify noCollision collisionRule never
 kill @e[tag=buildspot]

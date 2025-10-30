@@ -1,6 +1,6 @@
-execute if score @s health matches 0 run data merge entity @s {CustomName:'["",{"text":"","color":"red"},{"text":"_____","color":"dark_gray"}]',CustomNameVisible:1}
-execute if score @s health matches 1 run data merge entity @s {CustomName:'["",{"text":"█","color":"red"},{"text":"____","color":"dark_gray"}]',CustomNameVisible:1}
-execute if score @s health matches 2 run data merge entity @s {CustomName:'["",{"text":"██","color":"gold"},{"text":"___","color":"dark_gray"}]',CustomNameVisible:1}
-execute if score @s health matches 3 run data merge entity @s {CustomName:'["",{"text":"███","color":"yellow"},{"text":"__","color":"dark_gray"}]',CustomNameVisible:1}
-execute if score @s health matches 4 run data merge entity @s {CustomName:'["",{"text":"████","color":"green"},{"text":"_","color":"dark_gray"}]',CustomNameVisible:1}
-execute if score @s health matches 5 run data merge entity @s {CustomName:'["",{"text":"█████","color":"green"},{"text":"","color":"dark_gray"}]',CustomNameVisible:1}
+execute if entity @s[tag=enemy.husk] run function func:debug/bar/showhealth/nested_execute_0
+execute if entity @s[tag=enemy.wolf] run function func:debug/bar/showhealth/nested_execute_1
+execute if entity @s[tag=enemy.stray] run function func:debug/bar/showhealth/nested_execute_2
+execute if entity @s[tag=enemy.bigfoot] run function func:debug/bar/showhealth/nested_execute_3
+execute if entity @s[tag=enemy.spider] run function func:debug/bar/showhealth/nested_execute_4
+execute if entity @s[tag=enemy.bigspider] run function func:debug/bar/showhealth/nested_execute_5

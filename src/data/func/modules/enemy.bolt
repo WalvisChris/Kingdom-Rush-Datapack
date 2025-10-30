@@ -1,11 +1,20 @@
 function func:enemy/spawnhusk:
-    summon husk ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.normal"]}
+    summon husk ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.husk","speed.normal"]}
 
 function func:enemy/spawnwolf:
-    summon wolf ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.fast"]}
+    summon wolf ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.wolf","speed.fast"]}
 
 function func:enemy/spawnstray:
-    summon stray ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","speed.normal"],ArmorItems:[{},{},{},{id:"leather_helmet",Count:1,components:{dyed_color:{rgb:0}}}]}
+    summon stray ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.stray","speed.normal"],ArmorItems:[{},{},{},{id:"leather_helmet",Count:1,components:{dyed_color:{rgb:0}}}]}
+
+function func:enemy/spawnbigfoot:
+    summon iron_golem ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.bigfoot","speed.slow"]}
+
+function func:enemy/spawnspider:
+    summon cave_spider ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.spider","speed.normal"]}
+
+function func:enemy/spawnbigspider:
+    summon spider ~ ~ ~ {Invulnerable:1,NoAI:1,Silent:1,Tags:["enemy","enemy.bigspider","speed.normal"]}
 
 function func:enemy/spawnwave:
     execute at @e[tag=path.start] positioned ~-2 ~ ~ run function func:enemy/spawnhusk
@@ -14,6 +23,13 @@ function func:enemy/enemymovement:
 
     execute if entity @s[tag=inCombat]:
         execute at @s run tp @s ~ ~ ~ facing entity @e[tag=soldier,limit=1,sort=nearest]
+
+    execute if entity @s[tag=speed.slow,tag=!inCombat]:
+        _speed = 0.05
+        if block ~ ~-2 ~ piston[facing=north] run tp @s ~ ~ ~-_speed 180 0
+        if block ~ ~-2 ~ piston[facing=east] run tp @s ~_speed ~ ~ 270 0
+        if block ~ ~-2 ~ piston[facing=south] run tp @s ~ ~ ~_speed 0 0
+        if block ~ ~-2 ~ piston[facing=west] run tp @s ~-_speed ~ ~ 90 0
 
     execute if entity @s[tag=speed.normal,tag=!inCombat]:
         _speed = 0.1
@@ -29,10 +45,18 @@ function func:enemy/enemymovement:
         if block ~ ~-2 ~ piston[facing=south] run tp @s ~ ~ ~_speed 0 0
         if block ~ ~-2 ~ piston[facing=west] run tp @s ~-_speed ~ ~ 90 0
 
+function func:enemy/sethealth:
+    execute if entity @s[tag=enemy.husk] run scoreboard players set @s health 5
+    execute if entity @s[tag=enemy.wolf] run scoreboard players set @s health 4
+    execute if entity @s[tag=enemy.stray] run scoreboard players set @s health 4
+    execute if entity @s[tag=enemy.bigfoot] run scoreboard players set @s health 8
+    execute if entity @s[tag=enemy.spider] run scoreboard players set @s health 3
+    execute if entity @s[tag=enemy.bigspider] run scoreboard players set @s health 5
+    team join noCollision @s
+
 function func:enemy/update:
     # set health
-    execute unless score @s health matches -10..:
-        scoreboard players set @s health 5
+    execute unless score @s health matches -10.. run function func:enemy/sethealth
 
     # healthbar
     execute if score @s health matches 0..:
@@ -42,5 +66,13 @@ function func:enemy/update:
     execute at @s if block ~ ~-2 ~ piston run function func:enemy/enemymovement
     
     # death check
-    execute if score @s health matches ..0:
-        kill @s
+    execute if score @s health matches ..0 run function func:enemy/die
+
+function func:enemy/die:
+    if entity @s[tag=enemy.husk] run scoreboard players add money game 3 # goblin
+    if entity @s[tag=enemy.wolf] run scoreboard players add money game 5 # wulf
+    if entity @s[tag=enemy.stray] run scoreboard players add money game 16 # shadow archer
+    if entity @s[tag=enemy.bigfoot] run scoreboard players add money game 50 # ogre
+    if entity @s[tag=enemy.spider] run scoreboard players add money game 6 # spider
+    if entity @s[tag=enemy.bigspider] run scoreboard players add money game 20 # big spider
+    kill @s
