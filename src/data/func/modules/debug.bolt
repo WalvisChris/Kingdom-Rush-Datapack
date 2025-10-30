@@ -44,12 +44,12 @@ def getReloadbarCommand(value, max):
 
 function func:debug/bar/showrate:
     execute if entity @s[tag=tower.archer]:
-        for i in range(21):
-            execute if score @s timer matches i run raw getReloadbarCommand(i, 20)
+        for i in range(17):
+            execute if score @s timer matches i run raw getReloadbarCommand(i, 16)
 
     execute if entity @s[tag=tower.wizzard]:
-        for i in range(21):
-            execute if score @s timer matches i run raw getReloadbarCommand(i, 20)
+        for i in range(31):
+            execute if score @s timer matches i run raw getReloadbarCommand(i, 30)
 
     execute if entity @s[tag=tower.bomb]:
         for i in range(61):
@@ -59,8 +59,7 @@ function func:debug/bar/hide:
     data merge entity @s {CustomNameVisible:0}
 
 def getHealthbarCommand(value, max):
-    f = int(max - value)
-    # f = int(max / value * 5)
+    f = int(value / max * 5)
     pct = value / max
     if pct > 0.75:
         color = "green"
@@ -70,29 +69,29 @@ def getHealthbarCommand(value, max):
         color = "gold"
     else:
         color = "red"
-    return f'data merge entity @s {{CustomName:\'["",{{"text":"{"█"*(max-f)}","color":"{color}"}},{{"text":"{"█"*f}","color":"dark_gray"}}]\',CustomNameVisible:1}}'
+    return f'data merge entity @s {{CustomName:\'["",{{"text":"{"█"*f}","color":"{color}"}},{{"text":"{"█"*(5-f)}","color":"dark_gray"}}]\',CustomNameVisible:1}}'
 
 function func:debug/bar/showhealth:    
     execute if entity @s[tag=enemy.husk]:
-        for i in range(6):
-            execute if score @s health matches i run raw getHealthbarCommand(i, 5)
+        for i in range(65):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 64)
 
     execute if entity @s[tag=enemy.wolf]:
-            for i in range(5):
-                execute if score @s health matches i run raw getHealthbarCommand(i, 4)
+            for i in range(29):
+                execute if score @s health matches i run raw getHealthbarCommand(i, 28)
 
     execute if entity @s[tag=enemy.stray]:
-            for i in range(5):
-                execute if score @s health matches i run raw getHealthbarCommand(i, 4)
+            for i in range(145):
+                execute if score @s health matches i run raw getHealthbarCommand(i, 144)
     
     execute if entity @s[tag=enemy.bigfoot]:
+        for i in range(641):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 640)
+    
+    execute if entity @s[tag=enemy.spider]:
         for i in range(9):
             execute if score @s health matches i run raw getHealthbarCommand(i, 8)
     
-    execute if entity @s[tag=enemy.spider]:
-        for i in range(4):
-            execute if score @s health matches i run raw getHealthbarCommand(i, 3)
-    
     execute if entity @s[tag=enemy.bigspider]:
-        for i in range(6):
-            execute if score @s health matches i run raw getHealthbarCommand(i, 5)
+        for i in range(49):
+            execute if score @s health matches i run raw getHealthbarCommand(i, 48)

@@ -1,5 +1,5 @@
-item replace entity @s container.10 with bow[minecraft:custom_name='{"text":"Archer Tower","italic":false}'] 1
-item replace entity @s container.12 with iron_sword[minecraft:custom_name='{"text":"Knight Tower","italic":false}'] 1
-item replace entity @s container.14 with amethyst_shard[minecraft:custom_name='{"text":"Wizzard Tower","italic":false}'] 1
-item replace entity @s container.16 with tnt[minecraft:custom_name='{"text":"Bomb Tower","italic":false}'] 1
+item replace entity @s container.10 with bow[minecraft:custom_name='{"text":"Archer Tower","italic":false}', lore=['[{"text":"cost: ","italic":false,"color":"gray"},{"text":"100","italic":false,"color":"blue"}]', '[{"text":"dps: ","italic":false,"color":"gray"},{"text":"6.88","italic":false,"color":"blue"}]']] 1
+item replace entity @s container.12 with iron_sword[minecraft:custom_name='{"text":"Knight Tower","italic":false}', lore=['[{"text":"cost: ","italic":false,"color":"gray"},{"text":"70","italic":false,"color":"blue"}]', '[{"text":"dps: ","italic":false,"color":"gray"},{"text":"6","italic":false,"color":"blue"}]']] 1
+item replace entity @s container.14 with amethyst_shard[minecraft:custom_name='{"text":"Wizzard Tower","italic":false}', lore=['[{"text":"cost: ","italic":false,"color":"gray"},{"text":"90","italic":false,"color":"blue"}]', '[{"text":"dps: ","italic":false,"color":"gray"},{"text":"10.33","italic":false,"color":"blue"}]']] 1
+item replace entity @s container.16 with tnt[minecraft:custom_name='{"text":"Bomb Tower","italic":false}', lore=['[{"text":"cost: ","italic":false,"color":"gray"},{"text":"112","italic":false,"color":"blue"}]', '[{"text":"dps: ","italic":false,"color":"gray"},{"text":"5.67x","italic":false,"color":"blue"}]']] 1
 team join noCollision @s

@@ -1,8 +1,8 @@
 # knight damage
-kDamageLow = 1
-kDamageMed = 2
-kDamageHigh = 3
-kDamageExtreme = 4
+kDamageLow = 3
+kDamageMed = 4
+kDamageHigh = 10
+kDamageExtreme = 18
 
 function func:soldier/armor1:
     item replace entity @s armor.chest with minecraft:leather_chestplate

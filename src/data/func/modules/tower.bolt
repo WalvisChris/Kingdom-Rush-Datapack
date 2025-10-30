@@ -1,22 +1,22 @@
 import math
 
 # archer damage
-aDamageLow = 1
-aDamageMed = 2
-aDamageHigh = 3
-aDamageExtreme = 4
+aDamageLow = 4
+aDamageMed = 7
+aDamageHigh = 10
+aDamageExtreme = 13
 
 # wizzard damage
-wDamageLow = 2
-wDamageMed = 4
-wDamageHigh = 6
-wDamageExtreme = 8
+wDamageLow = 9
+wDamageMed = 23
+wDamageHigh = 40
+wDamageExtreme = 76
 
 # bomb damage
-bDamageLow = 3
-bDamageMed = 6
-bDamageHigh = 9
-bDamageExtreme = 12
+bDamageLow = 15
+bDamageMed = 40
+bDamageHigh = 60
+bDamageExtreme = 100
 
 function func:tower/clear:
     fill ~-2 ~-2 ~-2 ~2 ~3 ~2 air
@@ -194,15 +194,16 @@ function func:tower/update:
         execute at @s anchored eyes if entity @e[tag=enemy,limit=1,sort=nearest,distance=..8]:
             
             tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] feet
-            execute unless score @s timer matches 20.. run scoreboard players add @s timer 1
+            execute unless score @s timer matches 16.. run scoreboard players add @s timer 1
 
             # shoot
-            execute if score @s timer matches 20..:
+            execute if score @s timer matches 16..:
                 function func:debug/shoot/archer
-                execute if entity @s[tag=tower.archer1] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageLow 
+                execute if entity @s[tag=tower.archer1] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageLow
                 execute if entity @s[tag=tower.archer2] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageMed 
                 execute if entity @s[tag=tower.archer3] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageHigh 
                 execute if entity @s[tag=tower.archer4] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health aDamageExtreme
+
                 execute at @p run playsound minecraft:entity.arrow.shoot master @p ~ ~ ~ 1 1.5
                 scoreboard players set @s timer 0
         
@@ -234,10 +235,10 @@ function func:tower/update:
         execute at @s anchored eyes if entity @e[tag=enemy,limit=1,sort=nearest,distance=..8]:
 
             tp @s ~ ~ ~ facing entity @e[tag=enemy,limit=1,sort=nearest,distance=..8] feet
-            execute unless score @s timer matches 20.. run scoreboard players add @s timer 1
+            execute unless score @s timer matches 30.. run scoreboard players add @s timer 1
 
             # shoot
-            execute if score @s timer matches 20..:
+            execute if score @s timer matches 30..:
                 function func:debug/shoot/wizzard
                 execute if entity @s[tag=tower.wizzard1] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageLow
                 execute if entity @s[tag=tower.wizzard2] run scoreboard players remove @e[tag=enemy,limit=1,sort=nearest,distance=..8] health wDamageMed
