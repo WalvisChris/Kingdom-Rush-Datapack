@@ -19,6 +19,13 @@ function func:enemy/spawnbigspider:
 function func:enemy/spawnwave:
     execute at @e[tag=path.start] positioned ~-2 ~ ~ run function func:enemy/spawnhusk
 
+function func:enemy/spawnmixedwave:
+    execute positioned -15 0 -2 run function func:enemy/spawnspider
+    execute positioned -15 0 -1 run function func:enemy/spawnwolf
+    execute positioned -15 0 0 run function func:enemy/spawnhusk
+    execute positioned -15 0 1 run function func:enemy/spawnstray
+    execute positioned -15 0 2 run function func:enemy/spawnbigfoot
+
 function func:enemy/enemymovement:
 
     execute if entity @s[tag=inCombat]:
